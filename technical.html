@@ -3,13 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <title>تحلیل تکنیکال | News-FX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: sans-serif; background: #f8f8f8; padding: 2rem; }
-    h1 { color: #1a1a2e; }
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    header, footer {
+      background-color: #1a1a2e;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    nav {
+      background-color: #16213e;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 0.7rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #00d4ff;
+    }
+
+    .content {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
+    }
+
+    .section {
+      background: white;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    iframe, .tradingview-widget-container {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>📈 تحلیل تکنیکال</h1>
-  <p>نمودارهای قیمتی، الگوهای کندلی و خطوط حمایت و مقاومت در این بخش قرار می‌گیرد.</p>
+
+<header>
+  <h1>📈 تحلیل تکنیکال بازار</h1>
+</header>
+
+<nav>
+  <a href="index.html">خانه</a>
+  <a href="economic.html">داده‌های اقتصادی</a>
+  <a href="technical.html">تحلیل تکنیکال</a>
+  <a href="fundamental.html">تحلیل فاندامنتال</a>
+</nav>
+
+<div class="content">
+  <div class="section">
+    <h2>🧭 چارت زنده یورو/دلار (EUR/USD)</h2>
+    <!-- TradingView Chart -->
+    <div class="tradingview-widget-container">
+      <div id="tradingview_chart"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+      <script type="text/javascript">
+      new TradingView.widget({
+        "width": "100%",
+        "height": 500,
+        "symbol": "OANDA:EURUSD",
+        "interval": "30",
+        "timezone": "Etc/UTC",
+        "theme": "light",
+        "style": "1",
+        "locale": "fa",
+        "toolbar_bg": "#f1f3f6",
+        "enable_publishing": false,
+        "container_id": "tradingview_chart"
+      });
+      </script>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>💹 قیمت‌های لحظه‌ای</h2>
+    <!-- قیمت لحظه‌ای با ویجت -->
+    <iframe src="https://www.widgets.investing.com/live-currency-cross-rates/110003/2" width="100%" height="400" scrolling="no"></iframe>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 News-FX | تحلیل تکنیکال بازار فارکس</p>
+</footer>
+
 </body>
 </html>
