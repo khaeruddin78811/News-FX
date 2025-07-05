@@ -51,26 +51,39 @@ nav a:hover {
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-.market-tabs {
+.market-boxes {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 15px;
   margin-bottom: 20px;
 }
 
-.market-tabs button {
+.market-box {
   background-color: #333;
   color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  text-align: center;
   cursor: pointer;
+  width: 140px;
 }
 
-.market-tabs button:hover {
+.market-box:hover {
   background-color: #00d4ff;
-  color: #000;
+  color: black;
+}
+
+.market-box .symbol {
+  font-weight: bold;
+}
+
+.market-box .price {
+  font-size: 1.2rem;
+}
+
+.market-box .change {
+  font-size: 0.9rem;
 }
 
 .chart-section, iframe {
@@ -79,10 +92,18 @@ nav a:hover {
   border: none;
 }
 
+.news-section {
+  margin-top: 1rem;
+  height: 400px;
+}
+
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
     align-items: center;
+  }
+  .market-box {
+    width: 100%;
   }
 }
 
@@ -95,25 +116,35 @@ nav a:hover {
   <a href="economic.html">داده‌های اقتصادی</a>
   <a href="technical.html">تحلیل تکنیکال</a>
   <a href="fundamental.html">تحلیل فاندامنتال</a>
-</nav><div class="content">  <!-- بخش شماره 1: با استایل Bloomberg -->  <div class="section">
-    <div class="market-tabs">
-      <button onclick="loadChart('OANDA:XAUUSD')">طلا</button>
-      <button onclick="loadChart('OANDA:EURUSD')">یورو/دلار</button>
-      <button onclick="loadChart('OANDA:GBPUSD')">پوند/دلار</button>
-      <button onclick="loadChart('NASDAQ:TSLA')">تسلا</button>
-      <button onclick="loadChart('BINANCE:BTCUSDT')">بیت‌کوین</button>
+</nav><div class="content">  <!-- نمایش بازارها با قیمت و درصد تغییر -->  <div class="section">
+    <div class="market-boxes">
+      <div class="market-box" onclick="loadChart('OANDA:XAUUSD'); loadNews('XAUUSD')">
+        <div class="symbol">طلا</div>
+        <div class="price">3346.50</div>
+        <div class="change" style="color:green">▲ 0.11%</div>
+      </div>
+      <div class="market-box" onclick="loadChart('OANDA:EURUSD'); loadNews('EURUSD')">
+        <div class="symbol">یورو/دلار</div>
+        <div class="price">1.18</div>
+        <div class="change" style="color:green">▲ 0.18%</div>
+      </div>
+      <div class="market-box" onclick="loadChart('OANDA:GBPUSD'); loadNews('GBPUSD')">
+        <div class="symbol">پوند/دلار</div>
+        <div class="price">1.37</div>
+        <div class="change" style="color:red">▼ 0.04%</div>
+      </div>
     </div>
     <div class="chart-section">
       <div id="tv_chart"></div>
     </div>
-  </div>  <!-- بخش شماره 3: جدول بازارها -->  <div class="section">
-    <h2>📊 جدول بازارها (مثل Bloomberg)</h2>
-    <iframe src="https://www.tradingview.com/markets/" scrolling="yes"></iframe>
+  </div>  <!-- نمایش اخبار اختصاصی برای نماد انتخابی -->  <div class="section news-section">
+    <h2>📰 اخبار مرتبط</h2>
+    <iframe id="news_frame" src="https://www.forexfactory.com/news" loading="lazy"></iframe>
   </div></div><footer>
   <p>© 2025 News-FX | تحلیل تکنیکال بازار فارکس</p>
 </footer><!-- اسکریپت بارگذاری چارت --><script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script><script>
 function loadChart(symbol) {
-  document.getElementById("tv_chart").innerHTML = ""; // پاک کردن چارت قبلی
+  document.getElementById("tv_chart").innerHTML = "";
   new TradingView.widget({
     "width": "100%",
     "height": 500,
@@ -129,7 +160,12 @@ function loadChart(symbol) {
   });
 }
 
-// چارت پیش‌فرض
+function loadNews(symbol) {
+  const newsUrl = `https://www.forexfactory.com/news`; // فعلاً عمومی، در آینده قابل اتصال به API خاص نماد
+  document.getElementById("news_frame").src = newsUrl;
+}
+
 loadChart('OANDA:EURUSD');
+loadNews('EURUSD');
 </script></body>
 </html>
