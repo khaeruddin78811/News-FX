@@ -80,6 +80,10 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
+      text-align: center;
+      margin: auto;
+      width: fit-content;
+      margin-bottom: 20px;
     }
     .chart-container iframe {
       width: 100%;
@@ -89,6 +93,11 @@
     .news-container {
       margin-top: 2rem;
       height: 450px;
+    }
+    .news-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
     @media (max-width: 600px) {
       .market-box {
@@ -107,58 +116,89 @@
   <a href="fundamental.html">تحلیل فاندامنتال</a>
 </nav><div class="content">
   <div class="market-selector" id="marketList">
-    <!-- جعبه‌های اولیه -->
-    <div class="market-box" onclick="updateChart('OANDA:XAUUSD', 'XAUUSD')">
+    <div class="market-box" data-symbol="XAUUSD" onclick="updateChart('OANDA:XAUUSD', 'XAUUSD')">
       <button class="remove-btn" onclick="event.stopPropagation(); this.parentElement.remove()">×</button>
       <div class="symbol">طلا</div>
-      <div class="price">3346.50</div>
-      <div class="change" style="color:green">▲ 0.11%</div>
+      <div class="price" id="price-XAUUSD">?</div>
+      <div class="change" id="change-XAUUSD">?</div>
     </div>
-    <div class="market-box" onclick="updateChart('OANDA:EURUSD', 'EURUSD')">
+    <div class="market-box" data-symbol="EURUSD" onclick="updateChart('OANDA:EURUSD', 'EURUSD')">
       <button class="remove-btn" onclick="event.stopPropagation(); this.parentElement.remove()">×</button>
       <div class="symbol">یورو/دلار</div>
-      <div class="price">1.18</div>
-      <div class="change" style="color:green">▲ 0.18%</div>
+      <div class="price" id="price-EURUSD">?</div>
+      <div class="change" id="change-EURUSD">?</div>
     </div>
-    <div class="market-box" onclick="updateChart('OANDA:GBPUSD', 'GBPUSD')">
+    <div class="market-box" data-symbol="GBPUSD" onclick="updateChart('OANDA:GBPUSD', 'GBPUSD')">
       <button class="remove-btn" onclick="event.stopPropagation(); this.parentElement.remove()">×</button>
       <div class="symbol">پوند/دلار</div>
-      <div class="price">1.37</div>
-      <div class="change" style="color:red">▼ 0.04%</div>
+      <div class="price" id="price-GBPUSD">?</div>
+      <div class="change" id="change-GBPUSD">?</div>
     </div>
-  </div>
-  <div class="add-symbol" onclick="addSymbol()">➕ افزودن نماد جدید</div>  <div class="chart-container">
+  </div>  <div class="add-symbol" onclick="addSymbol()">➕ افزودن نماد جدید</div>  <div class="chart-container">
     <iframe id="tv_chart" src="https://s.tradingview.com/widgetembed/?frameElementId=tv_chart&symbol=OANDA%3AEURUSD&interval=30&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&theme=Light&style=1&timezone=Etc%2FUTC&locale=fa" allowtransparency="true" scrolling="no"></iframe>
   </div>  <div class="news-container">
     <h2>📰 اخبار مرتبط</h2>
-    <iframe id="news_frame" src="https://www.forexfactory.com/news"></iframe>
+    <iframe id="news_frame" src="https://www.forexfactory.com/search?q=EURUSD"></iframe>
   </div>
 </div><footer>
   <p>© 2025 News-FX | تحلیل تکنیکال بازار</p>
 </footer><script>
-  function updateChart(symbol, news) {
-    const baseUrl = "https://s.tradingview.com/widgetembed/?frameElementId=tv_chart";
-    const params = `&symbol=${symbol}&interval=30&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&theme=Light&style=1&timezone=Etc%2FUTC&locale=fa`;
-    document.getElementById("tv_chart").src = baseUrl + params;
-    document.getElementById("news_frame").src = `https://www.forexfactory.com/search?q=${news}`;
-  }
+function updateChart(symbol, news) {
+  const baseUrl = "https://s.tradingview.com/widgetembed/?frameElementId=tv_chart";
+  const params = `&symbol=${symbol}&interval=30&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&theme=Light&style=1&timezone=Etc%2FUTC&locale=fa`;
+  document.getElementById("tv_chart").src = baseUrl + params;
+  document.getElementById("news_frame").src = `https://www.forexfactory.com/search?q=${news}`;
+}
 
-  function addSymbol() {
-    const symbol = prompt("مثلاً: OANDA:USDJPY");
-    const label = prompt("نام نمایشی: مثلاً دلار/ین");
-    if (!symbol || !label) return;
+function addSymbol() {
+  const symbol = prompt("مثلاً: USDJPY");
+  if (!symbol) return;
 
-    const marketList = document.getElementById("marketList");
-    const box = document.createElement("div");
-    box.className = "market-box";
-    box.setAttribute("onclick", `updateChart('${symbol}', '${symbol.split(':')[1]}')`);
-    box.innerHTML = `
-      <button class="remove-btn" onclick="event.stopPropagation(); this.parentElement.remove()">×</button>
-      <div class="symbol">${label}</div>
-      <div class="price">?</div>
-      <div class="change">?</div>
-    `;
-    marketList.appendChild(box);
-  }
+  const id = symbol.toUpperCase();
+  const marketList = document.getElementById("marketList");
+  const box = document.createElement("div");
+  box.className = "market-box";
+  box.setAttribute("data-symbol", id);
+  box.setAttribute("onclick", `updateChart('OANDA:${id}', '${id}')`);
+  box.innerHTML = `
+    <button class="remove-btn" onclick="event.stopPropagation(); this.parentElement.remove()">×</button>
+    <div class="symbol">${id}</div>
+    <div class="price" id="price-${id}">?</div>
+    <div class="change" id="change-${id}">?</div>
+  `;
+  marketList.appendChild(box);
+  fetchPrice(id);
+}
+
+function fetchPrice(symbol) {
+  const urlToday = `https://api.exchangerate.host/latest?base=${symbol.substring(0, 3)}&symbols=${symbol.substring(3, 6)}`;
+  const urlYesterday = `https://api.exchangerate.host/${getYesterday()}?base=${symbol.substring(0, 3)}&symbols=${symbol.substring(3, 6)}`;
+
+  Promise.all([
+    fetch(urlToday).then(res => res.json()),
+    fetch(urlYesterday).then(res => res.json())
+  ]).then(([today, yesterday]) => {
+    const to = symbol.substring(3, 6);
+    const price = today.rates[to];
+    const prev = yesterday.rates[to];
+    const change = (((price - prev) / prev) * 100).toFixed(2);
+    const changeColor = change >= 0 ? 'green' : 'red';
+
+    document.getElementById("price-" + symbol).textContent = price.toFixed(4);
+    document.getElementById("change-" + symbol).innerHTML = `<span style='color:${changeColor}'>${change >= 0 ? '▲' : '▼'} ${Math.abs(change)}%</span>`;
+  }).catch(() => {
+    document.getElementById("price-" + symbol).textContent = "خطا";
+    document.getElementById("change-" + symbol).textContent = "--";
+  });
+}
+
+function getYesterday() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return d.toISOString().split('T')[0];
+}
+
+// اجرای اولیه برای سه نماد پیش‌فرض
+['XAUUSD', 'EURUSD', 'GBPUSD'].forEach(fetchPrice);
 </script></body>
 </html>
