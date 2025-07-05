@@ -9,86 +9,96 @@
       margin: 0;
       padding: 0;
       background-color: #f4f4f4;
-    }header, footer {
-  background-color: #1a1a2e;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-}
-
-nav {
-  background-color: #16213e;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  padding: 1rem;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav a:hover {
-  color: #00d4ff;
-}
-
-.content {
-  max-width: 1200px;
-  margin: auto;
-  padding: 1rem;
-}
-
-.market-selector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.market-box {
-  background-color: #2c2c2c;
-  color: #fff;
-  border-radius: 8px;
-  padding: 10px;
-  width: 140px;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.market-box:hover {
-  background-color: #00d4ff;
-  color: #000;
-}
-
-.symbol { font-weight: bold; font-size: 1.1em; }
-.price { font-size: 1.3em; margin: 5px 0; }
-.change { font-size: 0.9em; }
-
-.chart-container iframe {
-  width: 100%;
-  height: 500px;
-  border: none;
-}
-
-.news-container {
-  margin-top: 2rem;
-  height: 450px;
-}
-
-@media (max-width: 600px) {
-  .market-box {
-    width: 100%;
-  }
-}
-
+    }
+    header, footer {
+      background-color: #1a1a2e;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    nav {
+      background-color: #16213e;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 1rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #00d4ff;
+    }
+    .content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem;
+    }
+    .market-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .market-box {
+      background-color: #2c2c2c;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      width: 140px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+    }
+    .market-box:hover {
+      background-color: #00d4ff;
+      color: #000;
+    }
+    .symbol { font-weight: bold; font-size: 1.1em; }
+    .price { font-size: 1.3em; margin: 5px 0; }
+    .change { font-size: 0.9em; }
+    .remove-btn {
+      position: absolute;
+      top: 4px;
+      left: 6px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    .add-symbol {
+      background-color: #009688;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .chart-container iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+    .news-container {
+      margin-top: 2rem;
+      height: 450px;
+    }
+    @media (max-width: 600px) {
+      .market-box {
+        width: 100%;
+      }
+    }
   </style>
 </head>
-<body><header>
+<body>
+<header>
   <h1>📊 تحلیل تکنیکال بازار</h1>
 </header><nav>
   <a href="index.html">خانه</a>
@@ -96,36 +106,59 @@ nav a:hover {
   <a href="technical.html">تحلیل تکنیکال</a>
   <a href="fundamental.html">تحلیل فاندامنتال</a>
 </nav><div class="content">
-  <!-- نوار قیمت‌ها -->
-  <div class="market-selector">
-    <div class="market-box" onclick="updateChart('OANDA:XAUUSD')">
+  <div class="market-selector" id="marketList">
+    <!-- جعبه‌های اولیه -->
+    <div class="market-box" onclick="updateChart('OANDA:XAUUSD', 'XAUUSD')">
+      <button class="remove-btn" onclick="event.stopPropagation(); this.parentElement.remove()">×</button>
       <div class="symbol">طلا</div>
       <div class="price">3346.50</div>
       <div class="change" style="color:green">▲ 0.11%</div>
     </div>
-    <div class="market-box" onclick="updateChart('OANDA:EURUSD')">
+    <div class="market-box" onclick="updateChart('OANDA:EURUSD', 'EURUSD')">
+      <button class="remove-btn" onclick="event.stopPropagation(); this.parentElement.remove()">×</button>
       <div class="symbol">یورو/دلار</div>
       <div class="price">1.18</div>
       <div class="change" style="color:green">▲ 0.18%</div>
     </div>
-    <div class="market-box" onclick="updateChart('OANDA:GBPUSD')">
+    <div class="market-box" onclick="updateChart('OANDA:GBPUSD', 'GBPUSD')">
+      <button class="remove-btn" onclick="event.stopPropagation(); this.parentElement.remove()">×</button>
       <div class="symbol">پوند/دلار</div>
       <div class="price">1.37</div>
       <div class="change" style="color:red">▼ 0.04%</div>
     </div>
-  </div>  <!-- چارت با ویجت امن تریدینگ‌ویو -->  <div class="chart-container">
-    <iframe id="tv_chart" src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_0d56b&symbol=OANDA%3AEURUSD&interval=30&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&theme=Light&style=1&timezone=Etc%2FUTC&locale=fa" allowtransparency="true" scrolling="no"></iframe>
-  </div>  <!-- اخبار -->  <div class="news-container">
+  </div>
+  <div class="add-symbol" onclick="addSymbol()">➕ افزودن نماد جدید</div>  <div class="chart-container">
+    <iframe id="tv_chart" src="https://s.tradingview.com/widgetembed/?frameElementId=tv_chart&symbol=OANDA%3AEURUSD&interval=30&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&theme=Light&style=1&timezone=Etc%2FUTC&locale=fa" allowtransparency="true" scrolling="no"></iframe>
+  </div>  <div class="news-container">
     <h2>📰 اخبار مرتبط</h2>
-    <iframe src="https://www.forexfactory.com/news"></iframe>
+    <iframe id="news_frame" src="https://www.forexfactory.com/news"></iframe>
   </div>
 </div><footer>
   <p>© 2025 News-FX | تحلیل تکنیکال بازار</p>
 </footer><script>
-  function updateChart(symbol) {
-    const baseUrl = "https://s.tradingview.com/widgetembed/?frameElementId=tradingview_0d56b";
+  function updateChart(symbol, news) {
+    const baseUrl = "https://s.tradingview.com/widgetembed/?frameElementId=tv_chart";
     const params = `&symbol=${symbol}&interval=30&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&theme=Light&style=1&timezone=Etc%2FUTC&locale=fa`;
     document.getElementById("tv_chart").src = baseUrl + params;
+    document.getElementById("news_frame").src = `https://www.forexfactory.com/search?q=${news}`;
+  }
+
+  function addSymbol() {
+    const symbol = prompt("مثلاً: OANDA:USDJPY");
+    const label = prompt("نام نمایشی: مثلاً دلار/ین");
+    if (!symbol || !label) return;
+
+    const marketList = document.getElementById("marketList");
+    const box = document.createElement("div");
+    box.className = "market-box";
+    box.setAttribute("onclick", `updateChart('${symbol}', '${symbol.split(':')[1]}')`);
+    box.innerHTML = `
+      <button class="remove-btn" onclick="event.stopPropagation(); this.parentElement.remove()">×</button>
+      <div class="symbol">${label}</div>
+      <div class="price">?</div>
+      <div class="change">?</div>
+    `;
+    marketList.appendChild(box);
   }
 </script></body>
 </html>
