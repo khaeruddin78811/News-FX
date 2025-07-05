@@ -5,79 +5,167 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>News-FX | خبرگزاری اقتصادی فارکس</title>
   <style>
-    body {
-      font-family: sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      background: #f5f5f5;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
       color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     header {
-      background-color: #1a1a2e;
+      background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
       color: white;
-      padding: 1rem;
+      padding: 1.5rem 1rem;
       text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
     }
     nav {
-      background-color: #16213e;
-      padding: 0.5rem;
+      background: linear-gradient(to right, #16213e, #1a1a2e);
+      padding: 1rem;
       text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     nav a {
       color: white;
-      margin: 0 10px;
+      margin: 0 15px;
       text-decoration: none;
+      font-size: 1.3rem;
+      font-weight: bold;
+      padding: 8px 15px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
     }
     .container {
       max-width: 900px;
-      margin: auto;
-      padding: 1rem;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      flex: 1;
     }
     .news-item {
       background: white;
-      margin-bottom: 1rem;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .news-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
     }
     .news-item h2 {
       margin-top: 0;
+      margin-bottom: 1rem;
+      color: #1a1a2e;
+      font-size: 1.5rem;
+      border-right: 4px solid #00d4ff;
+      padding-right: 10px;
+    }
+    .news-item p {
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #ccc, transparent);
+      margin: 2rem 0;
     }
     footer {
       text-align: center;
-      padding: 1rem;
-      background-color: #1a1a2e;
+      padding: 1.5rem;
+      background: linear-gradient(to right, #16213e, #1a1a2e);
       color: white;
+      margin-top: auto;
+    }
+    footer p {
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      nav {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav a {
+        margin: 5px 0;
+        font-size: 1.2rem;
+      }
+      header h1 {
+        font-size: 1.5rem;
+      }
+      .news-item {
+        padding: 1.2rem;
+      }
+      .news-item h2 {
+        font-size: 1.3rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      nav a {
+        font-size: 1.1rem;
+        padding: 6px 10px;
+      }
+      .news-item p {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>خبرگزاری اقتصادی News-FX</h1>
-    <p>آخرین اخبار اقتصادی جهان </p>
+    <p>آخرین اخبار اقتصادی جهان</p>
   </header>
 
-<nav>
-  <a href="index.html">خانه</a>
-  <a href="economic.html">داده‌های اقتصادی</a>
-  <a href="technical.html">تحلیل تکنیکال</a>
-  <a href="fundamental.html">تحلیل فاندامنتال</a>
-</nav>
+  <nav>
+    <a href="index.html">خانه</a>
+    <a href="economic.html">داده‌های اقتصادی</a>
+    <a href="technical.html">تحلیل تکنیکال</a>
+    <a href="fundamental.html">تحلیل فاندامنتال</a>
+  </nav>
 
   <div class="container">
     <div class="news-item">
       <h2>🎯 افزایش نرخ بهره توسط فدرال رزرو</h2>
-      <p>امروز بانک مرکزی ایالات متحده نرخ بهره را ۰.۲۵٪ افزایش داد تا با تورم مقابله کند...</p>
+      <p>امروز بانک مرکزی ایالات متحده نرخ بهره را ۰.۲۵٪ افزایش داد تا با تورم مقابله کند. این تصمیم در نشست دو روزه فدرال رزرو گرفته شد و نشان می‌دهد که مسئولان پولی آمریکا همچنان نگران تورم بالا هستند. تحلیلگران پیش‌بینی می‌کنند این افزایش نرخ بهره می‌تواند بر بازارهای جهانی تأثیر قابل توجهی بگذارد.</p>
     </div>
+    
+    <hr>
 
     <div class="news-item">
       <h2>📉 کاهش قیمت طلا به زیر ۱۹۰۰ دلار</h2>
-      <p>در پی قدرت گرفتن دلار آمریکا، قیمت طلا به پایین‌ترین سطح در ۳ هفته اخیر رسید...</p>
+      <p>در پی قدرت گرفتن دلار آمریکا، قیمت طلا در معاملات روز سه‌شنبه به پایین‌ترین سطح در ۳ هفته اخیر رسید. هر اونس طلا در بازارهای جهانی با کاهش ۱.۲ درصدی به ۱۸۹۵ دلار رسید. کارشناسان علت اصلی این کاهش را تقویت دلار در برابر سایر ارزهای اصلی و بهبود انتظارات تورمی می‌دانند.</p>
     </div>
   </div>
 
   <footer>
-    &copy; 2025 - سایت خبری News-FX | تمامی حقوق محفوظ است.
+    <p>© 2025 - سایت خبری News-FX | تمامی حقوق محفوظ است.</p>
   </footer>
 </body>
 </html>
